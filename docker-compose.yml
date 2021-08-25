@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile
+    image: 'laravelapp'
     ports:
       - 8080:80
     volumes:

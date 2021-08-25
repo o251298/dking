@@ -1,9 +1,15 @@
 <?php
 
+include_once(ROOT.'/models/Product.php');
+
 class ProductController
 {
     public function actionIndex(){
-        echo __METHOD__;
+
+        $productList = array();
+        $productList = Product::getProduct();
+
+        include_once(ROOT.'/views/product/index.php');
         return true;
     }
 

@@ -24,28 +24,22 @@
         <div class="row">
             <div class="col-md-8 col-lg-8">
 
-
-                <?php if ($result == true): ?>
-                        <div class="alert alert-success" role="alert">
-                            <h4>Успех</h4>
+                <?php if (!empty($errors)): ?>
+                    <?php foreach ($errors as $error): ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?= $error; ?>
                         </div>
-                    <?php else: ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
 
-                    <?php if (!empty($errors)): ?>
-                        <?php foreach ($errors as $error): ?>
-                            <div class="alert alert-danger" role="alert">
-                                <?= $error; ?>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                    <div class="ckeckout-left-sidebar">
-                        <!-- Start Checkbox Area -->
-                        <div class="checkout-form">
-                            <h2 class="section-title-3">Данные о покупателе</h2>
+                <div class="ckeckout-left-sidebar">
+                    <!-- Start Checkbox Area -->
+                    <div class="checkout-form">
+                        <h2 class="section-title-3">Данные о покупателе</h2>
                             <form action="#" method="post" class="checkout-form-inner">
                                 <div class="single-checkout-box">
                                     <input type="text" placeholder="<?= $user['username'] ?>" value="<?= $user['username'] ?>" name="fname">
-                                    <input type="text" placeholder="last name"  name="lname">
+                                    <input type="text" placeholder="last name" name="lname">
                                 </div>
                                 <div class="single-checkout-box">
                                     <input type="email" placeholder="<?= $user['email'] ?>" value="<?= $user['email'] ?>" name="email">
@@ -58,18 +52,9 @@
                                     <input type="submit" name="buy" class="ts-btn btn-light btn-large hover-theme">
                                 </div>
                             </form>
-                        </div>
                     </div>
-
-
-
-                <?php endif; ?>
-
-
-
+                </div>
             </div>
-<?php if ($result != true): ?>
-
             <div class="col-md-4 col-lg-4">
                 <div class="checkout-right-sidebar">
                     <div class="our-important-note">
@@ -83,9 +68,6 @@
 
                 </div>
             </div>
-<?php endif; ?>
-
-
         </div>
     </div>
 </section>

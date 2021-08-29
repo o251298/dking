@@ -26,14 +26,10 @@ class CartController
         require_once(ROOT.'/views/cart/view.php');
         return true;
     }
-
-
     public function actionCheckout(){
 
-        $result = false;
-
-
-        if (isset($_POST['buy'])) {
+        if (isset($_POST['buy'])){
+            echo "ФОРМА ОТПРАВЛЕНА";
 
 
             $fname = $_POST['fname'];
@@ -45,33 +41,27 @@ class CartController
 
             $errors = false;
             if (!User::checkEmail($email)){
-                $errors[] = "Неверный email";
+                $errors[] = "er1";
             }
             if (!User::checkNumber($number)){
-                $errors[] = "Номер телефона не корректный";
+                $errors[] = "e3";
             }
-
             if ($errors == false){
                 $productsInCart = Cart::getProducts();
-
                 if (User::isGuest()){
                     $userId = false;
-
                 } else {
                     $userId = User::checkLogged();
                 }
 
+
                 $result = Order::save($fname, $lname, $email, $number, $productsInCart, $UserComment, $userId);
 
-
-                if ($result == true){
+                die();
+                if ($result){
                     Cart::clear();
                 }
             } else {
-                $userId = User::checkLogged();
-                $user = User::getUserById($userId);
-                $fname = $user['username'];
-                $email = $user['email'];
                 $productsInCart = Cart::getProducts();
                 $productsIds = array_keys($productsInCart);
                 $products = Product::getProductByIds($productsIds);
@@ -79,9 +69,9 @@ class CartController
                 $totalPrice = Cart::getTotalPrice($products);
 
             }
+
         } else {
             $productsInCart = Cart::getProducts();
-
             if ($productsInCart == false){
                 header("Location: /");
             } else {
@@ -91,20 +81,21 @@ class CartController
                 $totalPrice = Cart::getTotalPrice($products);
 
                 $fname = false;
-                $lname = false;
                 $email = false;
                 $comment = false;
 
                 if (User::isGuest()){
+                    echo "user no auth";
 
                 } else {
                     $userId = User::checkLogged();
                     $user = User::getUserById($userId);
-                    $fname = $user['username'];
-                    $email = $user['email'];
+                    echo "user auth";
                 }
             }
         }
+
+
         include_once(ROOT.'/views/cart/checkout.php');
         return true;
     }

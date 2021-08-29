@@ -120,10 +120,9 @@ class User
     }
 
     public static function checkNumber($number){
-        if (strlen($number) >= 10){
+        if (strlen($number) >= 4){
             return true;
         }
         return false;
     }
-
 }

@@ -71,4 +71,26 @@ class Product
         $row = $result->fetch();
         return $row['count'];
     }
+
+    public static function getProductByIds($ids){
+        $products = array();
+        $db = DB::getConnection();
+
+        $idString = implode(',', $ids);
+        $sql = "SELECT * FROM product WHERE `id` IN ($idString)";
+
+        $result = $db->query($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        $i = 0;
+        while ($row = $result->fetch()){
+            $products[$i]['id'] = $row['id'];
+            $products[$i]['name'] = $row['name'];
+            $products[$i]['image'] = $row['image'];
+            $products[$i]['price'] = $row['price'];
+            $products[$i]['code'] = $row['code'];
+            $i++;
+        }
+        return $products;
+    }
 }

@@ -122,7 +122,7 @@
                             <?php else: ?>
                             <li><a href="/user/logout"><span class="ti-user"></span></a></li>
                             <?php endif; ?>
-                            <li class="cart__menu"> <i style="color: red"><?php echo Cart::countItems(); ?></i> <span class="ti-shopping-cart"></span></li>
+                            <li class="cart__menu"> <i style="color: red; position: absolute; font-size: 20px; font-weight: bold" id="cart"><?php echo Cart::countItems(); ?></i> <span class="ti-shopping-cart"></span></li>
                             <li class="toggle__menu hidden-xs hidden-sm"><span class="ti-menu"></span></li>
                         </ul>
                     </div>
@@ -259,7 +259,7 @@
                     <li class="total__price">$130.00</li>
                 </ul>
                 <ul class="shopping__btn">
-                    <li><a href="cart.html">View Cart</a></li>
+                    <li><a href="/cart/view">View Cart</a></li>
                     <li class="shp__checkout"><a href="checkout.html">Checkout</a></li>
                 </ul>
             </div>

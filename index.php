@@ -10,6 +10,7 @@ error_reporting(E_ALL); // Отображение всех ошибок
 
 // 2 Подключение файлов системы
 define('ROOT', dirname(__FILE__));
+include_once(ROOT.'/components/function.php');
 include_once(ROOT.'/components/Autoload.php');
 
 

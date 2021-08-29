@@ -8,7 +8,8 @@ return array(
      'user/login' => 'user/login',
      'user/logout' => 'user/logout',
      'cabinet/edit' => 'cabinet/edit',
-     'cart/add' => 'cart/add',
+     'cart/addAjax/([0-9]+)' => 'cart/addAjax/$1',
+     'cart/view' => 'cart/view',
      'cabinet' => 'cabinet/index',
      '' => 'site/index',
 

@@ -110,6 +110,7 @@
 <!-- Placed js at the end of the document so the pages load faster -->
 
 <!-- jquery latest version -->
+<!--<script src="/web/js/jquery-3.6.0.min.js"></script>-->
 <script src="/web/js/vendor/jquery-1.12.0.min.js"></script>
 <!-- Bootstrap framework js -->
 <script src="/web/js/bootstrap.min.js"></script>
@@ -121,5 +122,18 @@
 <script src="/web/js/waypoints.min.js"></script>
 <!-- Main js file that contents all jQuery plugins activation. -->
 <script src="/web/js/main.js"></script>
+<script>
+    $(document).ready(function (){
+       $(".addToCart").click(function (){
+           var id = $(this).attr("data-id");
+           console.log(id);
+           $.post("/cart/addAjax/"+id, {}, function (data){
+              $("#cart").html(data);
+              console.log(data);
+           });
+           return false;
+       });
+    });
+</script>
 </body>
 </html>

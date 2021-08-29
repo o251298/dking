@@ -9,7 +9,7 @@ class Cart
         // Инициализация массива с продуктами
         $productsInCart = array();
         // Если есть в сессии продукты, пишем их в массив
-        if ($_SESSION['products']){
+        if (isset($_SESSION['products'])){
             $productsInCart = $_SESSION['products'];
         }
         // Если в массиве есть такой ключ(продукт) увеличиваенм на 1 значение
@@ -54,6 +54,12 @@ class Cart
                 $total =+ $item['price'] * $productsInCart[$item['id']];
             }
             return $total;
+        }
+    }
+
+    public static function clear(){
+        if (isset($_SESSION['products'])){
+            unset($_SESSION['products']);
         }
     }
 }

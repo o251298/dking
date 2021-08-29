@@ -119,4 +119,11 @@ class User
         return $result->execute();
     }
 
+    public static function checkNumber($number){
+        if (strlen($number) >= 10){
+            return true;
+        }
+        return false;
+    }
+
 }

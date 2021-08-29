@@ -3,7 +3,8 @@
 class SiteController
 {
     public function actionIndex(){
-        echo __METHOD__;
+
+        require_once(ROOT.'/views/site/index.php');
         return true;
     }
 }

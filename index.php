@@ -1,12 +1,22 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+session_start();
+// Front Controller
+
+// 1 Общие настройки, включение отображения ошибок
+ini_set('display_errors', 1); // Отображение ошибок
+error_reporting(E_ALL); // Отображение всех ошибок
 
 
+
+// 2 Подключение файлов системы
 define('ROOT', dirname(__FILE__));
-include_once(ROOT.'/components/Router.php');
-include_once(ROOT.'/components/DB.php');
+include_once(ROOT.'/components/Autoload.php');
 
 
-$router = new Router();
+
+
+
+// 3 Вызов роутера
+$router = new Router;
+
 $router->run();

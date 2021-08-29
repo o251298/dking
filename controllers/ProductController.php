@@ -1,20 +1,16 @@
 <?php
-
 include_once(ROOT.'/models/Product.php');
 
 class ProductController
 {
-    public function actionIndex(){
+    public function actionView($id){
+        $categoryList = array();
+        $categoryList = Category::getCategoryList();
 
-        $productList = array();
-        $productList = Product::getProduct();
+        $product = Product::getProductById($id);
 
-        include_once(ROOT.'/views/product/index.php');
-        return true;
-    }
 
-    public function actionView(){
-        echo __METHOD__;
+        require_once(ROOT.'/views/product/view.php');
         return true;
     }
 }

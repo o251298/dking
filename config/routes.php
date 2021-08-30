@@ -10,6 +10,7 @@ return array(
      'cabinet/edit' => 'cabinet/edit',
      'cart/addAjax/([0-9]+)' => 'cart/addAjax/$1',
      'cart/view' => 'cart/view',
+     'cart/clear' => 'cart/clear',
      'cart/checkout' => 'cart/checkout',
      'cabinet' => 'cabinet/index',
      '' => 'site/index',

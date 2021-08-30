@@ -3,6 +3,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                <?php if (!empty($products)): ?>
                 <form action="#">
                     <div class="table-content table-responsive">
                         <table>
@@ -18,7 +21,13 @@
                             </thead>
                             <tbody>
 
-                            <?php if (!empty($products)): ?>
+
+
+
+
+
+
+
                                 <?php foreach ($products as $item):?>
                                     <tr>
                                         <td class="product-thumbnail"><a href="#"><img src="<?= $item['image']; ?>" alt="product img" /></a></td>
@@ -29,9 +38,11 @@
                                         <td class="product-remove"><a href="#">X</a></td>
                                     </tr>
                                 <?php endforeach;?>
-                            <?php else: ?>
-                            <h1>НИхера</h1>
-                            <?php endif; ?>
+
+
+
+
+
 
 
 
@@ -41,8 +52,7 @@
                     <div class="row">
                         <div class="col-md-8 col-sm-7 col-xs-12">
                             <div class="buttons-cart">
-                                <input type="submit" value="Update Cart" />
-                                <a href="#">Continue Shopping</a>
+                                <a href="/cart/clear">Очистить корзину</a>
                             </div>
                             <div class="coupon">
                                 <h3>Coupon</h3>
@@ -96,6 +106,11 @@
                         </div>
                     </div>
                 </form>
+
+                <?php else: ?>
+                    <h1>Ваша корзина пуста</h1><br>
+                    <a href="<?php echo  $_SERVER['HTTP_REFERER']; ?>">Вернуться к покупкам</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

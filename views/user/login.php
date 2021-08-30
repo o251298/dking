@@ -8,7 +8,6 @@ include_once ROOT.'/views/layouts/header.php';
                 <ul class="login__register__menu" role="tablist">
                     <li role="presentation" class="login active" style="font-size: 30px">Войти в кабинет</li>
                 </ul>
-                lname
                 <form action="#" method="post">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Ваш email:</label>

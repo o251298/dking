@@ -17,25 +17,27 @@
         </div>
     </div>
 </div>
-<!-- End Bradcaump area -->
-<!-- Start Checkout Area -->
-<section class="our-checkout-area ptb--120 bg__white">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-lg-8">
 
-                <?php if (!empty($errors)): ?>
-                    <?php foreach ($errors as $error): ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?= $error; ?>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+<?php if (isset($result) && $result == true) :?>
+    <h1>Suceess</h1>
+    <?php else:?>
+    <section class="our-checkout-area ptb--120 bg__white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-8">
 
-                <div class="ckeckout-left-sidebar">
-                    <!-- Start Checkbox Area -->
-                    <div class="checkout-form">
-                        <h2 class="section-title-3">Данные о покупателе</h2>
+                    <?php if (!empty($errors)): ?>
+                        <?php foreach ($errors as $error): ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?= $error; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                    <div class="ckeckout-left-sidebar">
+                        <!-- Start Checkbox Area -->
+                        <div class="checkout-form">
+                            <h2 class="section-title-3">Данные о покупателе</h2>
                             <form action="#" method="post" class="checkout-form-inner">
                                 <div class="single-checkout-box">
                                     <input type="text" placeholder="<?= !User::isGuest() ? $user['username'] : null ?>" value="<?= !User::isGuest() ? $user['username'] : null ?>" name="fname">
@@ -52,23 +54,28 @@
                                     <input type="submit" name="buy" class="ts-btn btn-light btn-large hover-theme">
                                 </div>
                             </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-lg-4">
-                <div class="checkout-right-sidebar">
-                    <div class="our-important-note">
-                        <h2 class="section-title-3">Итог :</h2>
-                        <p class="note-desc">Вы перешли в каталог оформления заказа.</p>
-                        <ul class="important-note">
-                            <li><a href=""><i class="zmdi zmdi-caret-right-circle"></i>ВСЕГО ТОВАРОВ: <?= $totalCount; ?></a></li>
-                            <li><a href=""><i class="zmdi zmdi-caret-right-circle"></i> ЦЕНА ВСЕГО:  <?= $totalPrice; ?></a></li>
-                        </ul>
-                    </div>
+                <div class="col-md-4 col-lg-4">
+                    <div class="checkout-right-sidebar">
+                        <div class="our-important-note">
+                            <h2 class="section-title-3">Итог :</h2>
+                            <p class="note-desc">Вы перешли в каталог оформления заказа.</p>
+                            <ul class="important-note">
+                                <li><a href=""><i class="zmdi zmdi-caret-right-circle"></i>ВСЕГО ТОВАРОВ: <?= $totalCount; ?></a></li>
+                                <li><a href=""><i class="zmdi zmdi-caret-right-circle"></i> ЦЕНА ВСЕГО:  <?= $totalPrice; ?></a></li>
+                            </ul>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <?php endif;?>
+<!-- End Bradcaump area -->
+<!-- Start Checkout Area -->
+
 <?php include ROOT.'/views/layouts/footer.php';?>

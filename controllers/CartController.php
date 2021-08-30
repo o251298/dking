@@ -96,4 +96,12 @@ class CartController
         include_once(ROOT.'/views/cart/checkout.php');
         return true;
     }
+
+
+    public function actionClear(){
+        Cart::clear();
+        header("Location: /cart/view");
+
+        return true;
+    }
 }

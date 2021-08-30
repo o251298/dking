@@ -38,11 +38,11 @@
                         <h2 class="section-title-3">Данные о покупателе</h2>
                             <form action="#" method="post" class="checkout-form-inner">
                                 <div class="single-checkout-box">
-                                    <input type="text" placeholder="<?= $user['username'] ?>" value="<?= $user['username'] ?>" name="fname">
+                                    <input type="text" placeholder="<?= !User::isGuest() ? $user['username'] : null ?>" value="<?= !User::isGuest() ? $user['username'] : null ?>" name="fname">
                                     <input type="text" placeholder="last name" name="lname">
                                 </div>
                                 <div class="single-checkout-box">
-                                    <input type="email" placeholder="<?= $user['email'] ?>" value="<?= $user['email'] ?>" name="email">
+                                    <input type="email" placeholder="<?= !User::isGuest() ? $user['username'] : null ?>" value="<?= !User::isGuest() ? $user['username'] : null ?>" name="email">
                                     <input type="text" placeholder="Phone*" name="number">
                                 </div>
                                 <div class="single-checkout-box">

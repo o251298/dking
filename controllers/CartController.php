@@ -26,6 +26,7 @@ class CartController
         require_once(ROOT.'/views/cart/view.php');
         return true;
     }
+
     public function actionCheckout(){
 
         if (isset($_POST['buy'])){
@@ -49,16 +50,13 @@ class CartController
             if ($errors == false){
                 $productsInCart = Cart::getProducts();
                 if (User::isGuest()){
-                    $userId = false;
+                    $userId = null;
                 } else {
                     $userId = User::checkLogged();
                 }
 
-
                 $result = Order::save($fname, $lname, $email, $number, $productsInCart, $UserComment, $userId);
-
-                die();
-                if ($result){
+                if ($result == true){
                     Cart::clear();
                 }
             } else {
@@ -67,7 +65,6 @@ class CartController
                 $products = Product::getProductByIds($productsIds);
                 $totalCount = Cart::countItems();
                 $totalPrice = Cart::getTotalPrice($products);
-
             }
 
         } else {

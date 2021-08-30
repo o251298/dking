@@ -14,9 +14,6 @@ include_once(ROOT.'/components/function.php');
 include_once(ROOT.'/components/Autoload.php');
 
 
-
-
-
 // 3 Вызов роутера
 $router = new Router;
 

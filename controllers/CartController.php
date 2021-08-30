@@ -30,9 +30,6 @@ class CartController
     public function actionCheckout(){
 
         if (isset($_POST['buy'])){
-            echo "ФОРМА ОТПРАВЛЕНА";
-
-
             $fname = $_POST['fname'];
             $lname = $_POST['lname'];
             $email = $_POST['email'];
@@ -57,6 +54,13 @@ class CartController
 
                 $result = Order::save($fname, $lname, $email, $number, $productsInCart, $UserComment, $userId);
                 if ($result == true){
+                    $params = include(ROOT.'/config/sms_params.php');
+                    $number = (string) "38".$number;
+
+                    $text = "Дорогой {$fname}, Ваш заказ успешно создан";
+
+                    $sms = new Sms($number, $text, $params['url'], $params['token']);
+                    $sms->getConnection();
                     Cart::clear();
                 }
             } else {
@@ -82,12 +86,12 @@ class CartController
                 $comment = false;
 
                 if (User::isGuest()){
-                    echo "user no auth";
+
 
                 } else {
                     $userId = User::checkLogged();
                     $user = User::getUserById($userId);
-                    echo "user auth";
+
                 }
             }
         }

@@ -19,7 +19,7 @@
 </div>
 
 <?php if (isset($result) && $result == true) :?>
-    <h1>Suceess</h1>
+    <h1>Ваш заказ создан, ожидайте подтверждение в смс</h1>
     <?php else:?>
     <section class="our-checkout-area ptb--120 bg__white">
         <div class="container">

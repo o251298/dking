@@ -62,4 +62,22 @@ class Cart
             unset($_SESSION['products']);
         }
     }
+
+    public static function removeProduct($id){
+        $id = intval($id);
+        if (isset($_SESSION['products'])){
+            $products = $_SESSION['products'];
+            if(array_key_exists($id, $products)){
+                $products[$id] = $products[$id] - 1;
+                $products[$id];
+            }
+            $_SESSION['products'] = $products;
+            if ($products[$id] == 0){
+
+                unset($products[$id]);
+            }
+            $_SESSION['products'] = $products;
+            return $products;
+        }
+    }
 }

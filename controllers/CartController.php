@@ -97,11 +97,16 @@ class CartController
         return true;
     }
 
-
     public function actionClear(){
         Cart::clear();
         header("Location: /cart/view");
 
         return true;
+    }
+
+    public function actionRemove($id){
+        Cart::removeProduct($id);
+        $previous = $_SERVER['HTTP_REFERER'];
+        header("Location: $previous");
     }
 }

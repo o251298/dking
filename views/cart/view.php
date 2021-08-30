@@ -35,7 +35,7 @@
                                         <td class="product-price"><span class="amount"><?= $item['price']; ?> грн</span></td>
                                         <td class="product-quantity"><?= $productsInCart[$item['id']]; ?></td>
                                         <td class="product-subtotal"><?= $item['name']; ?></td>
-                                        <td class="product-remove"><a href="#">X</a></td>
+                                        <td class="product-remove"><a href="/cart/remove/<?= $item['id']; ?>">X</a></td>
                                     </tr>
                                 <?php endforeach;?>
 
@@ -115,4 +115,17 @@
         </div>
     </div>
 </div>
+    <script>
+        $(document).ready(function (){
+            $(".delItem").click(function (){
+                var id = $(this).attr("data-id");
+                console.log(id);
+                $.post("/cart/addAjax/"+id, {}, function (data){
+                    $("#cart").html(data);
+                    console.log(data);
+                });
+                return false;
+            });
+        });
+    </script>
 <?php include ROOT.'/views/layouts/footer.php';?>

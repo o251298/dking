@@ -21,7 +21,7 @@ class Sms
         $data = [
             "phones" => ["$this->phone"],
             "text" => $this->text,
-            "originator" => "DKING"
+            "originator" => "Shop Zakaz"
         ];
         return $data = json_encode($data);
     }
@@ -29,8 +29,8 @@ class Sms
     public function getConnection(){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-           'Content-Type: application/json',
-           'Content-Length: ' . strlen($this->setData()),
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($this->setData()),
             'X-Requested-With: XMLHttpRequest',
             'Accept: application/json, text/javascript, */*;q=0.01',
             'Authorization: Bearer '.$this->token

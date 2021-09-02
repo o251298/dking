@@ -1,26 +1,26 @@
 <?php include ROOT.'/views/layouts/header.php';?>
-<div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
-    <div class="ht__bradcaump__wrap">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="bradcaump__inner text-center">
-                        <h2 class="bradcaump-title">Корзина</h2>
-                        <nav class="bradcaump-inner">
-                            <a class="breadcrumb-item" href="index.html">Home</a>
-                            <span class="brd-separetor">/</span>
-                            <span class="breadcrumb-item active">Checkout</span>
-                        </nav>
+    <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
+        <div class="ht__bradcaump__wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="bradcaump__inner text-center">
+                            <h2 class="bradcaump-title">Корзина</h2>
+                            <nav class="bradcaump-inner">
+                                <a class="breadcrumb-item" href="index.html">Home</a>
+                                <span class="brd-separetor">/</span>
+                                <span class="breadcrumb-item active">Checkout</span>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 <?php if (isset($result) && $result == true) :?>
     <h1>Ваш заказ создан, ожидайте подтверждение в смс</h1>
-    <?php else:?>
+<?php else:?>
     <section class="our-checkout-area ptb--120 bg__white">
         <div class="container">
             <div class="row">
@@ -74,8 +74,8 @@
         </div>
     </section>
 
-    <?php endif;?>
-<!-- End Bradcaump area -->
-<!-- Start Checkout Area -->
+<?php endif;?>
+    <!-- End Bradcaump area -->
+    <!-- Start Checkout Area -->
 
 <?php include ROOT.'/views/layouts/footer.php';?>

@@ -4,8 +4,8 @@ class Order
 {
     public static function save($fname, $lname, $email, $number, $products, $userComment, $userId)
     {
-          $db = DB::getConnection();
-          $sql = "INSERT INTO Orders (id, fname, lname, email, number, products, user_comment, user_id) VALUES (:id, :fname, :lname, :email, :number, :products, :user_comment, :user_id)";
+        $db = DB::getConnection();
+        $sql = "INSERT INTO Orders (id, fname, lname, email, number, products, user_comment, user_id) VALUES (:id, :fname, :lname, :email, :number, :products, :user_comment, :user_id)";
         $id = null;
         $products = json_encode($products);
         $result = $db->prepare($sql);

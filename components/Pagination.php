@@ -1,7 +1,7 @@
 <?php
 
 
-class Pagination
+class   Pagination
 {
     private $max = 10;
     private $index = 'page';

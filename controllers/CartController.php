@@ -6,7 +6,7 @@ class CartController
     public function actionAdd($id){
         Cart::addProduct($id);
         $previous = $_SERVER['HTTP_REFERER'];
-         header("Location: $previous");
+        header("Location: $previous");
     }
 
     public function actionAddAjax($id){
@@ -54,13 +54,13 @@ class CartController
 
                 $result = Order::save($fname, $lname, $email, $number, $productsInCart, $UserComment, $userId);
                 if ($result == true){
-                    $params = include(ROOT.'/config/sms_params.php');
-                    $number = (string) "38".$number;
-
-                    $text = "Дорогой {$fname}, Ваш заказ успешно создан";
-
-                    $sms = new Sms($number, $text, $params['url'], $params['token']);
-                    $sms->getConnection();
+//                    $params = include(ROOT.'/config/sms_params.php');
+//                    $number = (string) "38".$number;
+//
+//                    $text = "Дорогой {$fname}, Ваш заказ успешно создан";
+//
+//                    $sms = new Sms($number, $text, $params['url'], $params['token']);
+//                    $sms->getConnection();
                     Cart::clear();
                 }
             } else {

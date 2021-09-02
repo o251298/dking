@@ -1,6 +1,5 @@
 <footer class="htc__foooter__area gray-bg">
     <div class="container">
-
         <!-- Start Copyright Area -->
         <div class="htc__copyright__area">
             <div class="row">
@@ -124,15 +123,15 @@
 <script src="/web/js/main.js"></script>
 <script>
     $(document).ready(function (){
-       $(".addToCart").click(function (){
-           var id = $(this).attr("data-id");
-           console.log(id);
-           $.post("/cart/addAjax/"+id, {}, function (data){
-              $("#cart").html(data);
-              console.log(data);
-           });
-           return false;
-       });
+        $(".addToCart").click(function (){
+            var id = $(this).attr("data-id");
+            console.log(id);
+            $.post("/cart/addAjax/"+id, {}, function (data){
+                $("#cart").html(data);
+                console.log(data);
+            });
+            return false;
+        });
     });
 </script>
 </body>

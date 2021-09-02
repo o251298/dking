@@ -49,7 +49,7 @@ class UserController
             }
 
             if ($errors == false){
-               $result = User::register($username, $email, $password);
+                $result = User::register($username, $email, $password);
             }
         }
 
@@ -59,12 +59,6 @@ class UserController
         include_once ROOT.'/views/user/register.php';
         return true;
     }
-
-
-
-
-
-
     public function actionLogin(){
         $email = '';
         $password = '';

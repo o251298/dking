@@ -6,13 +6,14 @@ class User
 {
     public static function register($username, $email, $password){
         $db = DB::getConnection();
-        $sql = 'INSERT INTO user (`username`, `email`, `password`) '
-            . 'VALUES (:username, :email, :password)';
-
+        $sql = 'INSERT INTO user (`username`, `email`, `password`, `status`) '
+            . 'VALUES (:username, :email, :password, :status)';
+        $status = 0;
         $result = $db->prepare($sql); // PDO::prepare — Подготавливает запрос к выполнению и возвращает связанный с этим запросом объект
         $result->bindParam(':username', $username, PDO::PARAM_STR);
         $result->bindParam(':email', $email, PDO::PARAM_STR);
         $result->bindParam(':password', $password, PDO::PARAM_STR); //
+        $result->bindParam(':status', $status, PDO::PARAM_STR); //
 
         return $result->execute(); // — Выполняет подготовленное утверждение
     }

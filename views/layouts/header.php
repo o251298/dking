@@ -118,9 +118,9 @@
                         <ul class="menu-extra">
                             <li class="search search__open hidden-xs"><span class="ti-search"></span></li>
                             <?php if (User::isGuest()): ?>
-                            <li><a href="/user/login"><span class="ti-user"></span></a></li>
+                                <li><a href="/user/login"><span class="ti-user"></span></a></li>
                             <?php else: ?>
-                            <li><a href="/user/logout"><span class="ti-user"></span></a></li>
+                                <li><a href="/user/logout"><span class="ti-user"></span></a></li>
                             <?php endif; ?>
                             <li class="cart__menu"> <i style="color: red; position: absolute; font-size: 20px; font-weight: bold" id="cart"><?php echo Cart::countItems(); ?></i> <span class="ti-shopping-cart"></span></li>
                             <li class="toggle__menu hidden-xs hidden-sm"><span class="ti-menu"></span></li>
@@ -222,38 +222,38 @@
                 <div class="offsetmenu__close__btn">
                     <a href="#"><i class="zmdi zmdi-close"></i></a>
                 </div>
-<!--                <div class="shp__cart__wrap">-->
-<!--                    <div class="shp__single__product">-->
-<!--                        <div class="shp__pro__thumb">-->
-<!--                            <a href="#">-->
-<!--                                <img src="web/img/product/sm-img/1.jpg" alt="product images">-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                        <div class="shp__pro__details">-->
-<!--                            <h2><a href="product-details.html">BO&Play Wireless Speaker</a></h2>-->
-<!--                            <span class="quantity">QTY: 1</span>-->
-<!--                            <span class="shp__price">$105.00</span>-->
-<!--                        </div>-->
-<!--                        <div class="remove__btn">-->
-<!--                            <a href="#" title="Remove this item"><i class="zmdi zmdi-close"></i></a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="shp__single__product">-->
-<!--                        <div class="shp__pro__thumb">-->
-<!--                            <a href="#">-->
-<!--                                <img src="web/img/product/sm-img/2.jpg" alt="product images">-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                        <div class="shp__pro__details">-->
-<!--                            <h2><a href="product-details.html">Brone Candle</a></h2>-->
-<!--                            <span class="quantity">QTY: 1</span>-->
-<!--                            <span class="shp__price">$25.00</span>-->
-<!--                        </div>-->
-<!--                        <div class="remove__btn">-->
-<!--                            <a href="#" title="Remove this item"><i class="zmdi zmdi-close"></i></a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="shp__cart__wrap">-->
+                <!--                    <div class="shp__single__product">-->
+                <!--                        <div class="shp__pro__thumb">-->
+                <!--                            <a href="#">-->
+                <!--                                <img src="web/img/product/sm-img/1.jpg" alt="product images">-->
+                <!--                            </a>-->
+                <!--                        </div>-->
+                <!--                        <div class="shp__pro__details">-->
+                <!--                            <h2><a href="product-details.html">BO&Play Wireless Speaker</a></h2>-->
+                <!--                            <span class="quantity">QTY: 1</span>-->
+                <!--                            <span class="shp__price">$105.00</span>-->
+                <!--                        </div>-->
+                <!--                        <div class="remove__btn">-->
+                <!--                            <a href="#" title="Remove this item"><i class="zmdi zmdi-close"></i></a>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                    <div class="shp__single__product">-->
+                <!--                        <div class="shp__pro__thumb">-->
+                <!--                            <a href="#">-->
+                <!--                                <img src="web/img/product/sm-img/2.jpg" alt="product images">-->
+                <!--                            </a>-->
+                <!--                        </div>-->
+                <!--                        <div class="shp__pro__details">-->
+                <!--                            <h2><a href="product-details.html">Brone Candle</a></h2>-->
+                <!--                            <span class="quantity">QTY: 1</span>-->
+                <!--                            <span class="shp__price">$25.00</span>-->
+                <!--                        </div>-->
+                <!--                        <div class="remove__btn">-->
+                <!--                            <a href="#" title="Remove this item"><i class="zmdi zmdi-close"></i></a>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
                 <ul class="shoping__total">
                     <li class="subtotal">Subtotal:</li>
                     <li class="total__price">$130.00</li>

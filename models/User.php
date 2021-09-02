@@ -126,4 +126,9 @@ class User
         }
         return false;
     }
+
+    public static function getUserData(){
+        $userId = self::checkLogged();
+        return $user = self::getUserById($userId);
+    }
 }

@@ -3,6 +3,7 @@
         <div class="content">
             <div class="container-fluid">
                 <h4 class="page-title">Список продуктов</h4>
+                <a class="page-title" href="/admin/product/create">Новый товар</a>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">

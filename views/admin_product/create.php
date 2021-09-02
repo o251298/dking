@@ -6,6 +6,16 @@
     <div class="content">
         <div class="container-fluid">
             <h4 class="page-title">Список продуктов</h4>
+            <?php if (!empty($errors)): ?>
+                <?php foreach ($errors as $item): ?>
+                <h1><?= $item; ?></h1>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <?php if (!empty($success)): ?>
+                <?php foreach ($success as $item): ?>
+                    <h1><?= $item; ?></h1>
+                <?php endforeach; ?>
+            <?php endif; ?>
             <div class="row">
                 <div class="col-md-6">
 
@@ -41,7 +51,7 @@
                         </div>
                         <div class="card-body">
 
-                            <form action="" method="post">
+                            <form action="" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="name">Имя товара</label>
                                 <input type="text" name="name" class="form-control">
@@ -68,6 +78,12 @@
                                 <div class="form-group">
                                     <label for="price">Стоимость</label>
                                     <input type="text" name="price" class="form-control"">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="image">Изображение</label>
+                                    <input type="file" name="image" class="form-control"">
                                 </div>
 
                                 <div class="form-group">
@@ -112,6 +128,7 @@
                             </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

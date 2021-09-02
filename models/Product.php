@@ -139,27 +139,44 @@ class Product
         $result->execute();
     }
 
-    public static function updateProduct($id, $name, $code, $price, $availability, $brand, $description, $is_new, $is_recommended, $status){
+    public static function updateProduct($id, $options){
         $db = DB::getConnection();
-        $sql = "UPDATE product SET `name` = :name, `code` = :code, `price` = :price, `availability` = :availability, `brand` = :brand, `description` = :description, `is_new` = :is_new, `is_recommended` = :is_recommended, `status` = :status WHERE `id` = " . $id;
-
-        $result = $db->prepare($sql);
-
-        $result->bindParam(':name', $name);
-        $result->bindParam(':code', $code);
-        $result->bindParam(':price', $price);
-        $result->bindParam(':availability', $availability);
-        $result->bindParam(':brand', $brand);
-        $result->bindParam(':description', $description);
-        $result->bindParam(':is_new', $is_new);
-        $result->bindParam(':is_recommended', $is_recommended);
-        $result->bindParam(':status', $status);
-
-        return $result->execute();
+        $sql = 'UPDATE product SET `name` = :name, `category_id` = :category_id, `code` = :code, `price` = :price, `availability` = :availability, `brand` = :brand, `image`= :image, `description` = :description, `is_new` = :is_new, `is_recommended` = :is_recommended, `status` = :status WHERE `id` = ' . $id;
+        $result = self::getResult($db, $sql, $options);
+        $result->execute();
     }
 
-    public static function createProduct(){
-        echo "Success";
-        die();
+    public static function createProduct($options){
+        $db = DB::getConnection();
+        $sql = 'INSERT INTO product (`name`, `category_id`, `code`, `price`, `availability`, `brand`, `image`, `description`, `is_new`, `is_recommended`, `status`) VALUES(:name, :category_id, :code, :price, :availability, :brand, :image, :description, :is_new, :is_recommended, :status)';
+        $result = self::getResult($db, $sql, $options);
+        if($result->execute()){
+            return $db->lastInsertId();
+        }
+        return 0;
+    }
+
+    /**
+     * @param PDO $db
+     * @param $sql
+     * @param $options
+     * @return false|PDOStatement
+     */
+    public static function getResult(PDO $db, $sql, $options)
+    {
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':name', $options['name']);
+        $result->bindParam(':category_id', $options['category_id']);
+        $result->bindParam(':code', $options['code']);
+        $result->bindParam(':price', $options['price']);
+        $result->bindParam(':availability', $options['availability']);
+        $result->bindParam(':brand', $options['brand']);
+        $result->bindParam(':image', $options['image']);
+        $result->bindParam(':description', $options['description']);
+        $result->bindParam(':is_new', $options['is_new']);
+        $result->bindParam(':is_recommended', $options['is_recommended']);
+        $result->bindParam(':status', $options['status']);
+        return $result;
     }
 }

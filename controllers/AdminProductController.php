@@ -47,7 +47,6 @@ class AdminProductController
                         // move_uploaded_file перемещаем файл из $_FILES['image']['tmp_name'] в путь который мы укажем, $_SERVER['DOCUMENT_ROOT'] хранится наш проект
                         move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER["DOCUMENT_ROOT"] . "/upload/img/products/{$id}.jpg");
                     }
-
                 }
                 header("Location: /admin");
             }

@@ -51,7 +51,7 @@
                         </div>
                         <div class="card-body">
 
-                            <form action="" method="post">
+                            <form action="" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="name">Имя товара</label>
                                     <input type="text" name="name" class="form-control" value="<?= $product['name'];?>">
@@ -78,7 +78,11 @@
                                     <label for="price">Стоимость</label>
                                     <input type="text" name="price" class="form-control"" value="<?= $product['price'];?>">
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="image">Изображение</label>
+                                    <img src="">
+                                    <input type="file" name="image" class="form-control"">
+                                </div>
                                 <div class="form-group">
                                     <label for="brand">Производитель</label>
                                     <input type="text" name="brand" class="form-control" value="<?= $product['brand'];?>">

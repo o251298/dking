@@ -18,6 +18,8 @@ return array(
     'admin/product/read/([0-9]+)' => 'adminProduct/read/$1',
     'admin/product/update/([0-9]+)' => 'adminProduct/update/$1',
     'admin/product/delete/([0-9]+)' => 'adminProduct/delete/$1',
+    'admin/orders/page-([0-9]+)' => 'adminOrders/index/$1',
+    'admin/orders/view/([0-9]+)' => 'adminOrders/view/$1',
     'admin/product/create' => 'adminProduct/create',
     'admin' => 'admin/index',
     '' => 'site/index',

@@ -28,6 +28,7 @@ class CabinetController
             $email = $_POST['email'];
             $password = $_POST['password'];
 
+
             $errors = false;
             if (!User::checkUsername($username)){
                 $errors[] = "Некоректный логин";
@@ -45,6 +46,9 @@ class CabinetController
             }
             if ($errors == false){
                 $result = User::edit($userId, $username, $password, $email);
+                if(is_uploaded_file($_FILES['avatar']['tmp_name'])){
+                  move_uploaded_file($_FILES['avatar']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/upload/img/profile/{$userId}.jpg");
+                }
             }
         }
 

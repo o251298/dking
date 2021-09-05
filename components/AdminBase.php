@@ -19,9 +19,9 @@ abstract class AdminBase
     public static function checkAdmin(){
         $userId = User::checkLogged();
         $user = User::getUserById($userId);
-        if ($user['status'] == 0){
+        if ($user['status'] == 1){
             return true;
         }
-        die("Недостаточно прав!!!!");
+        header("Location: /");
     }
 }

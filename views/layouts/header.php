@@ -122,8 +122,10 @@
                             <?php else: ?>
                                 <li><a href="/user/logout"><span class="ti-user"></span></a></li>
                             <?php endif; ?>
-                            <li class="cart__menu"> <i style="color: red; position: absolute; font-size: 20px; font-weight: bold" id="cart"><?php echo Cart::countItems(); ?></i> <span class="ti-shopping-cart"></span></li>
-                            <li class="toggle__menu hidden-xs hidden-sm"><span class="ti-menu"></span></li>
+
+                            <li class="toggle__menu hidden-xs hidden-sm" id="cart" style="color: #4cae4c; margin-right: -25px; font-weight: bold;"><?php echo Cart::countItems(); ?></li>
+                            <li class="cart__menu"><span class="ti-shopping-cart"></span></li>
+                            <li class="toggle__menu hidden-xs hidden-sm" ><span class="ti-menu"></span></li>
                         </ul>
                     </div>
                 </div>

@@ -79,8 +79,15 @@
                                     <input type="text" name="price" class="form-control"" value="<?= $product['price'];?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="image">Изображение</label>
-                                    <img src="">
+
+                                    <img style="width: 200px" src="
+                                    <?php
+                                    if ($product['image'] != "image"){
+                                        echo $product['image'];
+                                    } else {
+                                        echo Product::getImage($product['id']);
+                                    }
+                                    ?>">
                                     <input type="file" name="image" class="form-control"">
                                 </div>
                                 <div class="form-group">

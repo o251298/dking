@@ -103,13 +103,13 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="/web/assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span >Hizrian</span></span> </a>
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="<?php echo User::getAvatar(User::checkLogged())?>" alt="user-img" width="36" class="img-circle"></span> </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li>
                                 <div class="user-box">
-                                    <div class="u-img"><img src="/web/assets/img/profile.jpg" alt="user"></div>
+                                    <div class="u-img"><img src="<?php echo User::getAvatar(User::checkLogged())?>" alt="user"></div>
                                     <div class="u-text">
-                                        <h4>Hizrian</h4>
+
                                         <p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                 </div>
                             </li>
@@ -132,7 +132,7 @@
         <div class="scrollbar-inner sidebar-wrapper">
             <div class="user">
                 <div class="photo">
-                    <img src="/web/assets/img/profile.jpg">
+                    <img src="<?php echo User::getAvatar(User::checkLogged())?>">
                 </div>
                 <div class="info">
                     <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -174,14 +174,14 @@
                     <a href="/admin">
                         <i class="la la-dashboard"></i>
                         <p>Мониторинг</p>
-                        <span class="badge badge-count">5</span>
+                        <span class="badge badge-count"></span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/admin/product/page-1">
                         <i class="la la-table"></i>
                         <p>Управление товарами</p>
-                        <span class="badge badge-count">14</span>
+                        <span class="badge badge-count"></span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -195,7 +195,7 @@
                     <a href="/admin">
                         <i class="la la-th"></i>
                         <p>Модули</p>
-                        <span class="badge badge-count">6</span>
+                        <span class="badge badge-count"></span>
                     </a>
                 </li>
 <!--                <li class="nav-item">-->

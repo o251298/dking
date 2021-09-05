@@ -131,4 +131,25 @@ class User
         $userId = self::checkLogged();
         return $user = self::getUserById($userId);
     }
+
+    public static function checkAdmin(){
+        $userId = self::checkLogged();
+        $user = self::getUserById($userId);
+
+        $admin = false;
+        if ($user['status'] == 1){
+            $admin = true;
+        }
+        return $admin;
+    }
+
+    public static function getAvatar($id){
+        $noImage = 'no-image.png';
+        $path = '/upload/img/profile/';
+        $pathToFile = $path . $id . '.jpg';
+        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $pathToFile)){
+            return $pathToFile;
+        }
+        return $pathToFile = $path . $noImage;
+    }
 }

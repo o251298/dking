@@ -6,7 +6,7 @@ include_once ROOT.'/views/layouts/header.php';
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <ul class="login__register__menu" role="tablist">
-                    <li role="presentation" style="font-size: 30px">Изменить данные</li>
+                    <li role="presentation" style="font-size: 30px">Изменить данные <?php echo $userId ;?></li>
                 </ul>
                 <?php if (isset($result) && $result == true): ?>
                     <h1>Успех</h1>
@@ -20,7 +20,12 @@ include_once ROOT.'/views/layouts/header.php';
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                    <form action="#" method="post">
+                    <form action="#" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="image">Изображение</label>
+                            <img src="<?php echo User::getAvatar($userId);?>">
+                            <input type="file" name="avatar" class="form-control"">
+                        </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Ваш логин:</label>
                             <input type="text" name="username" class="form-control" placeholder="username" value="<?= $username; ?>">

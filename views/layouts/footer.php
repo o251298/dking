@@ -11,6 +11,12 @@
                         </div>
                         <ul class="footer__menu">
                             <li><a href="/">Главная</a></li>
+                            <?php if (!User::isGuest()): ?>
+                                <?php if(User::checkAdmin()): ?>
+                                    <li><a href="/admin">ADMIN</a></li>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <li><a href="/">Главная</a></li>
                             <li><a href="/category/1">Каталог</a></li>
                         </ul>
                     </div>

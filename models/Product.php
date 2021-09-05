@@ -5,7 +5,7 @@ class Product
 {
     const COUNT_DEFAULT = 9;
     const COUNT_FOR_PAGE = 3;
-    const ADMIN_COUNT_PRODUCT_FOR_PAGE = 10;
+    const ADMIN_COUNT_PRODUCT_FOR_PAGE = 15;
 
     public static function getLatestProduct($count = self::COUNT_DEFAULT){
         $latestProduct = array();

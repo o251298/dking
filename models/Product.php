@@ -189,4 +189,22 @@ class Product
         }
         return $path . $noImage;
     }
+
+    public static function addParserProduct($options){
+        $db = DB::getConnection();
+        $sql = 'INSERT INTO product (`name`, `category_id`, `code`, `price`, `availability`, `brand`, `image`, `description`, `is_new`, `is_recommended`, `status`) VALUES(:name, :category_id, :code, :price, :availability, :brand, :image, :description, :is_new, :is_recommended, :status)';
+        $result = $db->prepare($sql);
+        $result->bindParam(':name', $options['name']);
+        $result->bindParam(':category_id', $options['category_id']);
+        $result->bindParam(':code', $options['code']);
+        $result->bindParam(':price', $options['price']);
+        $result->bindParam(':availability', $options['availability']);
+        $result->bindParam(':brand', $options['brand']);
+        $result->bindParam(':image', $options['image']);
+        $result->bindParam(':description', $options['description']);
+        $result->bindParam(':is_new', $options['is_new']);
+        $result->bindParam(':is_recommended', $options['is_recommended']);
+        $result->bindParam(':status', $options['status']);
+        return $result->execute();
+    }
 }

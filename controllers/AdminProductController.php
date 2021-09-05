@@ -1,7 +1,7 @@
 <?php
 
 
-class AdminProductController
+class AdminProductController extends AdminBase
 {
     /*
      * CRUD
@@ -14,6 +14,7 @@ class AdminProductController
      *
      */
     public function actionCreate(){
+        self::checkAdmin();
         $category = Category::getCategoryList();
         if (isset($_POST['submitAdd'])){
             $options = false;
@@ -57,6 +58,7 @@ class AdminProductController
 
 
     public function actionIndex($page){
+        self::checkAdmin();
         $productList = array();
         $productList = Product::getProductList($page);
         $total = Product::getTotalProduct();
@@ -71,6 +73,7 @@ class AdminProductController
 
 
     public function actionUpdate($id){
+        self::checkAdmin();
         $category = Category::getCategoryList();
         $product = Product::getProductById($id);
 
@@ -101,6 +104,7 @@ class AdminProductController
 
 
     public function actionDelete($id){
+        self::checkAdmin();
         if (isset($_POST['submit'])){
             Product::deleteProduct($id);
             $pref = $_SERVER['HTTP_REFERER'];

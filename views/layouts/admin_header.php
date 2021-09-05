@@ -49,7 +49,7 @@
                     <li class="nav-item dropdown hidden-caret">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="la la-bell"></i>
-                            <span class="notification">3</span>
+                            <span class="notification"><?= Order::getOrderCountByStatus(1); ?></span>
                         </a>
                         <ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
                             <li>
@@ -148,7 +148,7 @@
                     </a>
                     <div class="clearfix"></div>
 
-                    <div class="collapse in" id="collapseExample" aria-expanded="true" style="">
+                    <div class="collapse in" id="collapseExanotificationmple" aria-expanded="true" style="">
                         <ul class="nav">
                             <li>
                                 <a href="#profile">
@@ -185,10 +185,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin">
+                    <a href="/admin/orders/page-1">
                         <i class="la la-keyboard-o"></i>
                         <p>Управление заказами</p>
-                        <span class="badge badge-count">50</span>
+                        <span class="badge badge-count"><?= Order::getOrderCountByStatus(1); ?></span>
                     </a>
                 </li>
                 <li class="nav-item">

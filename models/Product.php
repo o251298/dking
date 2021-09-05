@@ -179,4 +179,14 @@ class Product
         $result->bindParam(':status', $options['status']);
         return $result;
     }
+
+    public static function getImage($id){
+        $noImage = 'no-image.png';
+        $path = '/upload/img/products/';
+        $pathToProductImage = $path . $id . '.jpg';
+        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $pathToProductImage)){
+            return $pathToProductImage;
+        }
+        return $path . $noImage;
+    }
 }

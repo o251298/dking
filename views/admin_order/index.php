@@ -14,16 +14,16 @@
                                         <th scope="col">id</th>
                                         <th scope="col">Имя клиента</th>
                                         <th scope="col">Телефон</th>
+                                        <th scope="col">Статус</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php foreach ($orders as $item): ?>
                                         <tr>
-                                            <td><?= $item['id']; ?></td>
+                                            <td><a href="/admin/orders/view/<?= $item['id']; ?>"><?= $item['id']; ?></a></td>
                                             <td><?= $item['name']; ?></td>
-                                            <td><?= $item['number']; ?></td>
-                                            <td><a href="/admin/product/update/<?= $item['id']; ?>">Прос</a></td>
-                                            <td><a href="/admin/product/update/<?= $item['id']; ?>">Редак</a></td>
+                                            <td><?php echo 380 . $item['number']; ?></td>
+                                            <td><?= $item['status']; ?></td>
                                             <td><a href="/admin/product/delete/<?= $item['id']; ?>">X</a></td>
                                         </tr>
                                     <?php endforeach; ?>

@@ -85,7 +85,14 @@
                                 <div class="product__inner">
                                     <div class="pro__thumb" style="height: 330px; width: 300px">
                                         <a href="./product/<?=$item['id']?>">
-                                            <img src="<?=$item['image'] ?>" style="max-width: 150px; max-height: 250px" alt="product images">
+                                            <img src="<?php
+                                            if ($item['image'] != "image"){
+                                                echo $item['image'];
+                                            } else {
+                                                $id = $item['id'];
+                                                echo Product::getImage($id);
+                                            }
+                                            ?>" style="max-width: 150px; max-height: 250px" alt="product images">
                                         </a>
                                     </div>
                                     <div class="product__hover__info">

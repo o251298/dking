@@ -8,10 +8,23 @@
                     <div class="col-md-6">
                         <div class="card">
                             <form action="" method="post">
+
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Статус:</label>
+                                    <select class="form-control" name="status">
+                                        <option <?php if ($order['status'] == 1) echo ' selected="selected"'?> value="1">Новый</option>
+                                        <option <?php if ($order['status'] == 2) echo ' selected="selected"'?> value="2">Обрабатывается менеджером</option>
+                                        <option <?php if ($order['status'] == 3) echo ' selected="selected"'?> value="3">Отправлено</option>
+                                        <option <?php if ($order['status'] == 4) echo ' selected="selected"'?> value="4">Доставленно</option>
+                                        <option <?php if ($order['status'] == 5) echo ' selected="selected"'?> value="5">Отменен</option>
+                                    </select>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="name">Имя клиента</label>
                                     <input type="text" name="fname" class="form-control" value="<?= $order['fname']; ?>">
                                 </div>
+
 
                                 <div class="form-group">
                                     <label for="name">Фамилия клиента</label>
@@ -27,21 +40,13 @@
                                     <textarea class="form-control" name="user_comment" rows="5"><?= $order['user_comment'];?></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name"><?= $order['user_id'];?></label>
+                                    <label for="name"> ID Пользователя <strong> <?= $order['user_id'];?> </strong></label>
                                 </div>
 
-                                <!--                                    <div class="form-group">-->
-                                <!--                                        <label for="exampleFormControlSelect2">Категория:</label>-->
-                                <!--                                        <select multiple class="form-control" name="category">-->
-                                <!--                                            --><?php //foreach ($category as $item): ?>
-                                <!--                                                <option value="--><?//= $item['id'] ?><!--" --><?php //if ($product['category_id'] == $item['id']) echo ' selected="selected"'?><!-->--><?php //echo $item['name']; ?><!--</option>-->
-                                <!--                                            --><?php //endforeach; ?>
-                                <!--                                        </select>-->
-                                <!--                                    </div>-->
 
 
                                 <div class="card-action">
-                                    <input type="submit" name="submitAdd" class="btn btn-success" value="Сохранить">
+                                    <input type="submit" name="submitUpd" class="btn btn-success" value="Сохранить">
                                     <input type="submit" name="submitCancel" class="btn btn-danger" value="Отменить">
                                 </div>
                             </form>

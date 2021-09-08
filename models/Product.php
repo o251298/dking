@@ -190,21 +190,45 @@ class Product
         return $path . $noImage;
     }
 
-    public static function addParserProduct($options){
+    public static function createParseProduct($name, $offer_id, $description, $image, $hash){
         $db = DB::getConnection();
-        $sql = 'INSERT INTO product (`name`, `category_id`, `code`, `price`, `availability`, `brand`, `image`, `description`, `is_new`, `is_recommended`, `status`) VALUES(:name, :category_id, :code, :price, :availability, :brand, :image, :description, :is_new, :is_recommended, :status)';
+        $sql = "INSERT INTO product_test (name, category_id, description, image, hash) VALUE (:name, :category_id, :description, :image, :hash)";
         $result = $db->prepare($sql);
-        $result->bindParam(':name', $options['name']);
-        $result->bindParam(':category_id', $options['category_id']);
-        $result->bindParam(':code', $options['code']);
-        $result->bindParam(':price', $options['price']);
-        $result->bindParam(':availability', $options['availability']);
-        $result->bindParam(':brand', $options['brand']);
-        $result->bindParam(':image', $options['image']);
-        $result->bindParam(':description', $options['description']);
-        $result->bindParam(':is_new', $options['is_new']);
-        $result->bindParam(':is_recommended', $options['is_recommended']);
-        $result->bindParam(':status', $options['status']);
+        $result->bindParam(":name", $name);
+        $result->bindParam(":category_id", $offer_id);
+        $result->bindParam(":description", $description);
+        $result->bindParam(":image", $image);
+        $result->bindParam(":hash", $hash);
+        return $result->execute();
+    }
+
+    public static function getProductForParse(){
+        $arrayProduct = array();
+        $db = DB::getConnection();
+        $sql = "SELECT DISTINCT category_id, hash FROM product_test";
+        $result = $db->query($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+
+        $i = 0;
+        while ($row = $result->fetch()){
+            $arrayProduct[(integer)$row['category_id']]['hash'] = $row['hash'];
+            $i++;
+        }
+        return $arrayProduct;
+    }
+
+    public static function updateProductParser($id, $name, $category_id, $description, $image, $hash){
+        $db = DB::getConnection();
+        $sql = "UPDATE product_test SET name = :name, category_id = :category_id, description = :description, image = :image, hash = :hash WHERE category_id = '$id'";
+
+        $result = $db->prepare($sql);
+        $result->bindParam(":name", $name);
+        $result->bindParam(":category_id", $category_id);
+        $result->bindParam(":description", $description);
+        $result->bindParam(":image", $image);
+        $result->bindParam(":hash", $hash);
+
         return $result->execute();
     }
 }

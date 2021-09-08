@@ -1,81 +1,112 @@
 <?php
-
-/*
- *
- *
- *
- *
- *
- */
-
 class Parser
 {
-    public $url;
+    private $xmlUrl;
 
-    public static function parserXML(){
-        $url = 'https://pricecreator.rozetka.com.ua/seller-07b10cac0978b6c348ae6e18b710bd02.xml';
-        $xml = simplexml_load_file($url) OR die('error parser');
-
-        $category_arr = array();
-        foreach ($xml->shop->categories->category as $category){
-            $category_arr[] = $category;
-        }
-
-        $product_arr = array();
-        foreach ($xml->shop->offers->offer as $offer){
-            $product_arr[] = ['name' => (string) $offer->name, 'category' => (integer) $offer->categoryId, 'code' => $offer->stock_quantity, 'price' => $offer->price, 'availability' => $offer->stock_quantity, 'brand' => $offer->vendor, 'image' => $offer->picture, 'description' => $offer->description];
-        }
-
-
-//        echo '<pre>';
-//        var_dump($product_arr);
-//        echo '</pre>';
-
-        $options = array();
-
-        foreach ($product_arr as $item){
-
-            $db = DB::getConnection();
-            $sql = 'INSERT INTO product (`name`, `category_id`, `code`, `price`, `availability`, `brand`, `image`, `description`, `is_new`, `is_recommended`, `status`) VALUES(:name, :category_id, :code, :price, :availability, :brand, :image, :description, :is_new, :is_recommended, :status)';
-            $new = 1;
-            $is_recommended = 1;
-            $status = 1;
-
-            $result = $db->prepare($sql);
-
-            $result->bindParam(':name', $item['name']);
-            $result->bindParam(':category_id', $item['category']);
-            $result->bindParam(':code', $item['code']);
-            $result->bindParam(':price', $item['price']);
-            $result->bindParam(':availability', $item['availability']);
-            $result->bindParam(':brand', $item['brand']);
-            $result->bindParam(':image', $item['image'][0]);
-            $result->bindParam(':description', $item['description']);
-            $result->bindParam(':is_new', $new);
-            $result->bindParam(':is_recommended', $is_recommended);
-            $result->bindParam(':status', $status);
-            $result->execute();
-
-
-        }
-
-
-//        $similarProduct = array();
-//        foreach ($product_arr as $key => $val){
-//            $str = explode(' ', $val);
-//            $str = $str[0] . ' ' . $str[1] . ' ' . $str[2] . ' ' . $str[3] .  ' ' . $str[4] . ' ' . $str[5];
-//            similar_text($val, $str, $percent);
-//            if ((integer) $percent > 85){
-//                if (isset($str)){
-//                    $similarProduct[] = $val;
-//                }
-//            }
-//        }
-//
-//
-//        echo '<pre>';
-//        var_dump($similarProduct);
-//        echo '</pre>';
-
+    public function __construct($xmlUrl){
+        $this->xmlUrl = $xmlUrl;
     }
+
+    private function getFileHash(){
+        $xml = file_get_contents($this->xmlUrl);
+        return hash('md5', $xml);
+    }
+
+    private function checkHash(){
+        $error = false;
+        $sourceData = Xml::getFileHashXML($this->xmlUrl);
+        if ($sourceData['hash'] == $this->getFileHash()){
+            $error[] = "Хеши совпадают!";
+        }
+        return $error;
+    }
+
+    private function parseProduct(){
+        $xml = simplexml_load_file($this->xmlUrl) OR die('error parse product');
+        foreach ($xml->shop->offers->offer as $offer){
+                $hash_file = json_encode($offer);
+                $name = $offer->name;
+                $description = $offer->description;
+                $offer_id = $offer['id'];
+                $image = $offer->picture[0];
+                $hash = hash('md5', $hash_file);
+                Product::createParseProduct($name, $offer_id, $description, $image, $hash);
+        }
+    }
+
+    private function checkOfferHash($arrayProduct){
+        $xml = simplexml_load_file($this->xmlUrl) OR die('error parser');
+        foreach ($xml->shop->offers->offer as $offer){
+            $hash_file = json_encode($offer);
+            $name = $offer->name;
+            $description = $offer->description;
+            $offer_id = (string)$offer['id'];
+            $image = $offer->picture[0];
+            $hash = hash('md5', $hash_file);
+
+            if ($arrayProduct[$offer_id]['hash'] !== $hash){
+                Product::updateProductParser($offer_id, $name, $offer_id, $description, $image, $hash);
+                echo "Внесены обновления в следующие товары:";
+                echo "<pre>";
+                echo $offer_id;
+                echo "</pre>";
+            }
+        }
+    }
+
+    private function parseCategory(){
+        $xml = simplexml_load_file($this->xmlUrl) OR die('error parse category');
+        $arrayCategory = array();
+        foreach ($xml->shop->categories->category as $category_price){
+            $hash = json_encode($category_price);
+            $hash = hash('md5', $hash);
+            $arrayCategory[] = (integer) $category_price['id'] . ';' . (string) $category_price . ';' . $hash;
+        }
+        Category::addCategoryParse($arrayCategory);
+    }
+
+    private function checkCategoryHash($arrayCategory){
+        $xml = simplexml_load_file($this->xmlUrl) OR die('error parser');
+        $newDataCategory = array();
+        foreach ($xml->shop->categories->category as $category_price){
+            $offer_id_category = (string) $category_price['id'];
+            $offer_name_category = $category_price;
+            $hash = json_encode($category_price);
+            $hash = hash('md5', $hash);
+            if ($arrayCategory[$offer_id_category]['hash'] !== $hash){
+                // "Update category";
+                $newDataCategory[] = (integer) $offer_id_category . ';' . (string) $offer_name_category . ';' . $hash;
+            }
+        }
+        Category::updateCategoryParse($newDataCategory);
+    }
+
+    public function run(){
+        $arrayProduct = Product::getProductForParse();
+        if ($this->getFileHash()){
+
+            $sourceData = Xml::getFileHashXML($this->xmlUrl);
+            if($sourceData['link_xml'] == $this->xmlUrl){
+                //  "Данный источник уже добавлен";
+                if ($this->checkHash() == false){
+                    Xml::updateHash($this->getFileHash(), $this->xmlUrl);
+                    $arrayProduct = Product::getProductForParse();
+                    $arrayCategory = Category::getCategoryHash();
+                    echo "Парсим и обновляем хеш" . '<br>';
+                    $this->checkOfferHash($arrayProduct);
+                    $this->checkCategoryHash($arrayCategory);
+                } else {
+                    echo "Хеш прайса совпадает с предыдущим!";
+                }
+            } else {
+                Xml::setFileHash($this->getFileHash(), $this->xmlUrl);
+                echo "Дабавили новый источник";
+                // забераем хеш и парсим
+                $this->parseProduct();
+                $this->parseCategory();
+            }
+        }
+    }
+
+
 }

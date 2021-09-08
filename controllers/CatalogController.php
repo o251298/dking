@@ -17,9 +17,6 @@ class CatalogController
         $pagination = new Pagination($total, $page, Product::COUNT_FOR_PAGE, 'page-');
 
 
-
-
-
         require_once(ROOT.'/views/catalog/category.php');
         return true;
     }

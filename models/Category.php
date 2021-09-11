@@ -17,11 +17,11 @@ class Category
 {
     const COUNT_DEFAULT = 4;
 
-    public static function getCategoryList(){
+    public static function getCategoryList($count = self::COUNT_DEFAULT){
         $categoryList = array();
 
         $db = DB::getConnection();
-        $sql = "SELECT `id`, `name`, `icon` FROM category ORDER BY `id` ASC LIMIT ".self::COUNT_DEFAULT;
+        $sql = "SELECT `id`, `name`, `icon` FROM category ORDER BY `id` ASC LIMIT ".$count;
         $result = $db->query($sql);
 
         $i = 0;
@@ -33,6 +33,7 @@ class Category
         }
         return $categoryList;
     }
+
     public static function addCategoryParse($arrayCategoryParse){
         $db = DB::getConnection();
         $sql = "INSERT INTO offer_category_id (name, offer_id, hash) VALUE (:name, :offer_id, :hash)";
@@ -76,4 +77,21 @@ class Category
             $result->execute();
         }
     }
+
+    public static function getCategoryInForLink(){
+        $categoryInPrice = array();
+        $db = DB::getConnection();
+        $sql = "SELECT id, name, offer_id FROM offer_category_id";
+        $result = $db->query($sql);
+        $i = 0;
+        while ($row = $result->fetch()){
+            $categoryInPrice[$i]['id'] = $row['id'];
+            $categoryInPrice[$i]['name'] = $row['name'];
+            $categoryInPrice[$i]['offer_id'] = $row['offer_id'];
+            $i++;
+        }
+        return $categoryInPrice;
+    }
+
+
 }

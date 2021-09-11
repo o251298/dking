@@ -231,4 +231,14 @@ class Product
 
         return $result->execute();
     }
+
+    public function updateCategoryForProduct($options){
+        $db = DB::getConnection();
+        $sql = "UPDATE product_test SET category_id = :category_id WHERE category_id = '$id'";
+
+        $result = $db->prepare($sql);
+    }
+
+
+
 }

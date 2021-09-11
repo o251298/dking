@@ -3,6 +3,7 @@
 
 class AdminSplitterController extends AdminBase
 {
+    const DEFAULT_COUNT_CATEGORY = 100;
     /*
      * УПРАВЛЕНИЕ ТОВАРАМИ
      * 1. ПОЛУЧЕНИЕ НОВЫХ ТОВАРОВ
@@ -37,4 +38,32 @@ class AdminSplitterController extends AdminBase
      *
      */
 
+
+
+
+    public function actionLinkCategory(){
+
+        // Выводим  2 списка категорий
+
+        $categoryInPrice = array();
+        $categoryShop = array();
+        $categoryShop = Category::getCategoryList(self::DEFAULT_COUNT_CATEGORY);
+        $categoryInPrice = Category::getCategoryInForLink();
+        if (isset($_POST['linkCategory'])){
+            $options = array();
+            $options['offerIdCategory'] = $_POST['offerIdCategory'];
+            $options['shopIdCategory'] = $_POST['shopIdCategory'];
+
+        }
+
+
+        require_once(ROOT.'/views/splitter/category.php');
+        return true;
+    }
+
+//    public function actionChangeCategory($categoryInPrice, $categoryShop){
+//
+//        //
+//        return true;
+//    }
 }

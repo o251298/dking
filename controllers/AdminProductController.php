@@ -67,7 +67,7 @@ class AdminProductController extends AdminBase
         $pagination = new Pagination($total, $page, Product::ADMIN_COUNT_PRODUCT_FOR_PAGE, 'page-');
 
 
-        require_once(ROOT.'/views/admin_product/index.php');
+        require_once(ROOT . '/views/admin_product/index.php');
         return true;
     }
 

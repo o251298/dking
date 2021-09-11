@@ -22,6 +22,7 @@ return array(
     'admin/orders/view/([0-9]+)' => 'adminOrders/view/$1',
     'admin/product/create' => 'adminProduct/create',
     'admin/splitter/category' => 'adminSplitter/linkCategory',
+    'admin/splitter/parse' => 'adminSplitter/parse',
     'admin' => 'admin/index',
     '' => 'site/index',
 );

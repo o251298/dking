@@ -81,16 +81,39 @@ class Category
     public static function getCategoryInForLink(){
         $categoryInPrice = array();
         $db = DB::getConnection();
-        $sql = "SELECT id, name, offer_id FROM offer_category_id";
+        $sql = "SELECT * FROM offer_category_id";
         $result = $db->query($sql);
         $i = 0;
         while ($row = $result->fetch()){
             $categoryInPrice[$i]['id'] = $row['id'];
             $categoryInPrice[$i]['name'] = $row['name'];
             $categoryInPrice[$i]['offer_id'] = $row['offer_id'];
+            $categoryInPrice[$i]['status'] = $row['status'];
+            $categoryInPrice[$i]['name_category_shop'] = $row['name_category_shop'];
             $i++;
         }
         return $categoryInPrice;
+    }
+
+    public static function setStatusCategoryOffer($id, $status, $name_category_shop){
+        // status 1 - false
+        $db = DB::getConnection();
+        $sql = "UPDATE offer_category_id SET status = :status, name_category_shop = :name_category_shop WHERE offer_id = '$id'";
+        $result = $db->prepare($sql);
+        $result->bindParam(":status", $status);
+        $result->bindParam(":name_category_shop", $name_category_shop);
+
+         return $result->execute();
+    }
+
+    public static function getNameCategory($id){
+        $db = DB::getConnection();
+        $sql = "SELECT name as name FROM category WHERE id = '$id'";
+        $result = $db->query($sql);
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+        return $row['name'];
     }
 
 

@@ -48,12 +48,20 @@ class AdminSplitterController extends AdminBase
         $categoryInPrice = array();
         $categoryShop = array();
         $categoryShop = Category::getCategoryList(self::DEFAULT_COUNT_CATEGORY);
+
         $categoryInPrice = Category::getCategoryInForLink();
+
         if (isset($_POST['linkCategory'])){
             $options = array();
             $options['offerIdCategory'] = $_POST['offerIdCategory'];
             $options['shopIdCategory'] = $_POST['shopIdCategory'];
-
+            //$name_category_shop = $_POST['name_category_shop'];
+            $name = Category::getNameCategory($options['shopIdCategory']);
+            if (Product::updateCategoryForProduct($options)){
+                if (Category::setStatusCategoryOffer($options['offerIdCategory'], 1, $name)){
+                    header("Location: /admin/splitter/category");
+                }
+            }
         }
 
 
@@ -61,9 +69,9 @@ class AdminSplitterController extends AdminBase
         return true;
     }
 
-//    public function actionChangeCategory($categoryInPrice, $categoryShop){
-//
-//        //
-//        return true;
-//    }
+    public function actionParse(){
+        $parse = new Parser('./test2.xml');
+        $parse->run();
+        die();
+    }
 }

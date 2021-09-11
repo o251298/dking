@@ -6,6 +6,10 @@ class Product
     const COUNT_DEFAULT = 9;
     const COUNT_FOR_PAGE = 3;
     const ADMIN_COUNT_PRODUCT_FOR_PAGE = 15;
+    public static $defaultIdCategoryPrice = null;
+    public static $defaultIdCategoryShop = null;
+    public static $sourcePrice = 1;
+    public static $sourceAdmin = 0;
 
     public static function getLatestProduct($count = self::COUNT_DEFAULT){
         $latestProduct = array();
@@ -148,7 +152,7 @@ class Product
 
     public static function createProduct($options){
         $db = DB::getConnection();
-        $sql = 'INSERT INTO product (`name`, `category_id`, `code`, `price`, `availability`, `brand`, `image`, `description`, `is_new`, `is_recommended`, `status`) VALUES(:name, :category_id, :code, :price, :availability, :brand, :image, :description, :is_new, :is_recommended, :status)';
+        $sql = 'INSERT INTO product (`name`, `category_id`, `code`, `price`, `availability`, `brand`, `image`, `description`, `is_new`, `is_recommended`, `status`, `category_id_price`, `source`, `hash`) VALUES(:name, :category_id, :code, :price, :availability, :brand, :image, :description, :is_new, :is_recommended, :status, :category_id_price, :source, :hash)';
         $result = self::getResult($db, $sql, $options);
         if($result->execute()){
             return $db->lastInsertId();
@@ -164,6 +168,9 @@ class Product
      */
     public static function getResult(PDO $db, $sql, $options)
     {
+        $category_id_price = self::$defaultIdCategoryPrice;
+        $source = self::$sourceAdmin;
+        $hash = null;
         $result = $db->prepare($sql);
 
         $result->bindParam(':name', $options['name']);
@@ -177,6 +184,9 @@ class Product
         $result->bindParam(':is_new', $options['is_new']);
         $result->bindParam(':is_recommended', $options['is_recommended']);
         $result->bindParam(':status', $options['status']);
+        $result->bindParam(':category_id_price', $category_id_price);
+        $result->bindParam(':source', $source);
+        $result->bindParam(':hash', $hash);
         return $result;
     }
 
@@ -190,14 +200,39 @@ class Product
         return $path . $noImage;
     }
 
-    public static function createParseProduct($name, $offer_id, $description, $image, $hash){
+    public static function createParseProduct($name, $offer_id, $category_price_id, $description, $price, $image, $availability, $hash){
+
         $db = DB::getConnection();
-        $sql = "INSERT INTO product_test (name, category_id, description, image, hash) VALUE (:name, :category_id, :description, :image, :hash)";
+        $categoryIdAdmin = null;
+
+        $code = 0;
+
+
+        $brand = 0;
+
+        $is_new = 0;
+        $is_recommended = 0;
+        $status = 1;
+        $source = 1;
+        //
+
+        $sql = 'INSERT INTO product (`name`, `category_id`, `code`, `price`, `availability`, `brand`, `image`, `description`, `is_new`, `is_recommended`, `status`, `category_id_price`, `offer_id`, `source`, `hash`) VALUES(:name, :category_id, :code, :price, :availability, :brand, :image, :description, :is_new, :is_recommended, :status, :category_id_price, :offer_id, :source, :hash)';
+       // $sql = "INSERT INTO product_test (name, category_id, description, image, hash) VALUE (:name, :category_id, :description, :image, :hash)";
         $result = $db->prepare($sql);
         $result->bindParam(":name", $name);
-        $result->bindParam(":category_id", $offer_id);
-        $result->bindParam(":description", $description);
+        $result->bindParam(":category_id", $categoryIdAdmin);
+        $result->bindParam(":code", $code);
+        $result->bindParam(":price", $price);
+        $result->bindParam(":availability", $availability);
+        $result->bindParam(":brand", $brand);
         $result->bindParam(":image", $image);
+        $result->bindParam(":description", $description);
+        $result->bindParam(":is_new", $is_new);
+        $result->bindParam(":is_recommended", $is_recommended);
+        $result->bindParam(":status", $status);
+        $result->bindParam(":offer_id", $offer_id);
+        $result->bindParam(":category_id_price", $category_price_id);
+        $result->bindParam(":source", $source);
         $result->bindParam(":hash", $hash);
         return $result->execute();
     }
@@ -205,26 +240,24 @@ class Product
     public static function getProductForParse(){
         $arrayProduct = array();
         $db = DB::getConnection();
-        $sql = "SELECT DISTINCT category_id, hash FROM product_test";
+        $sql = "SELECT DISTINCT offer_id, hash FROM product";
         $result = $db->query($sql);
         $result->setFetchMode(PDO::FETCH_ASSOC);
-
-
         $i = 0;
         while ($row = $result->fetch()){
-            $arrayProduct[(integer)$row['category_id']]['hash'] = $row['hash'];
+            $arrayProduct[(integer)$row['offer_id']]['hash'] = $row['hash'];
             $i++;
         }
         return $arrayProduct;
     }
 
-    public static function updateProductParser($id, $name, $category_id, $description, $image, $hash){
+    public static function updateProductParser($id, $name, $category_price_id, $description, $image, $hash){
         $db = DB::getConnection();
-        $sql = "UPDATE product_test SET name = :name, category_id = :category_id, description = :description, image = :image, hash = :hash WHERE category_id = '$id'";
+        $sql = "UPDATE product SET name = :name, category_id_price = :category_id_price, description = :description, image = :image, hash = :hash WHERE offer_id = '$id' AND source = 1";
 
         $result = $db->prepare($sql);
         $result->bindParam(":name", $name);
-        $result->bindParam(":category_id", $category_id);
+        $result->bindParam(":category_id_price", $category_price_id);
         $result->bindParam(":description", $description);
         $result->bindParam(":image", $image);
         $result->bindParam(":hash", $hash);
@@ -232,13 +265,18 @@ class Product
         return $result->execute();
     }
 
-    public function updateCategoryForProduct($options){
+    public static function updateCategoryForProduct($options){
         $db = DB::getConnection();
-        $sql = "UPDATE product_test SET category_id = :category_id WHERE category_id = '$id'";
+        $categoryIdPrice = $options['offerIdCategory'];
+        $category_id = $options['shopIdCategory'];
+//        echo $category_id;
+//        die();
+        $sql = "UPDATE product SET category_id = :category_id WHERE category_id_price='$categoryIdPrice'";
 
         $result = $db->prepare($sql);
+        $result->bindParam(":category_id", $category_id);
+        return $result->execute();
     }
-
 
 
 }

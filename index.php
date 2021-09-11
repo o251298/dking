@@ -13,9 +13,7 @@ define('ROOT', dirname(__FILE__));
 include_once(ROOT.'/components/function.php');
 include_once(ROOT.'/components/Autoload.php');
 
-//$parse = new Parser('./test2.xml');
-//$parse->run();
-//die();
+
 
 // 3 Вызов роутера
 $router = new Router;

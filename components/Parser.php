@@ -25,12 +25,15 @@ class Parser
         $xml = simplexml_load_file($this->xmlUrl) OR die('error parse product');
         foreach ($xml->shop->offers->offer as $offer){
                 $hash_file = json_encode($offer);
-                $name = $offer->name;
-                $description = $offer->description;
-                $offer_id = $offer['id'];
-                $image = $offer->picture[0];
+                $name = strip_tags((string) $offer->name);
+                $offer_id = (integer) $offer['id'];
+                $category_price_id = (integer) $offer->categoryId;
+                $description = strip_tags((string) $offer->description);
+                $price = $offer->price;
+                $image = (string) $offer->picture[0];
+                $availability = (integer) $offer->stock_quantity;
                 $hash = hash('md5', $hash_file);
-                Product::createParseProduct($name, $offer_id, $description, $image, $hash);
+                Product::createParseProduct($name, $offer_id, $category_price_id, $description, $price, $image, $availability, $hash);
         }
     }
 
@@ -39,13 +42,14 @@ class Parser
         foreach ($xml->shop->offers->offer as $offer){
             $hash_file = json_encode($offer);
             $name = $offer->name;
-            $description = $offer->description;
+            $description = strip_tags((string) $offer->description);
             $offer_id = (string)$offer['id'];
+            $category_price_id = (integer) $offer->categoryId;
             $image = $offer->picture[0];
             $hash = hash('md5', $hash_file);
 
             if ($arrayProduct[$offer_id]['hash'] !== $hash){
-                Product::updateProductParser($offer_id, $name, $offer_id, $description, $image, $hash);
+                Product::updateProductParser($offer_id, $name, $category_price_id, $description, $image, $hash);
                 echo "Внесены обновления в следующие товары:";
                 echo "<pre>";
                 echo $offer_id;

@@ -3,10 +3,9 @@
     <div class="main-panel">
         <div class="content">
             <div class="container-fluid">
-                <h4 class="page-title">Список продуктов</h4>
-                <a class="page-title" href="/admin/product/create">Новый товар</a>
+                <h4 class="page-title">КАТЕГОРИИ</h4>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <table class="table table-hover">
@@ -16,6 +15,7 @@
                                         <th scope="col">Категория с прайса</th>
                                         <th scope="col">Категория магазина</th>
                                         <th scope="col">Объеденить</th>
+                                        <th scope="col">Статус привязки</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -37,6 +37,14 @@
                                                 </td>
                                                 <td>
                                                     <input type="submit" name="linkCategory">
+                                                </td>
+                                                <td>
+                                                    <?php echo ($item['status'] == 1) ? "Привязано" : "Не привязано" ?>
+                                                    <?php
+                                                    if ($item['name_category_shop'] !== 0){
+                                                        echo $item['name_category_shop'];
+                                                    }
+                                                    ?>
                                                 </td>
                                             </tr>
                                         </form>

@@ -8,12 +8,10 @@ class CabinetController
 
         $userId = User::checkLogged();
         $user = User::getUserById($userId);
-
+        $userOrders = Order::getOrdersByUserId(User::checkLogged());
         include_once ROOT.'/views/cabinet/index.php';
         return true;
     }
-
-
 
     public function actionEdit(){
         $userId = User::checkLogged();
@@ -56,5 +54,18 @@ class CabinetController
         return true;
     }
 
+    public function actionOrder($id){
 
+        $order = Order::getOrderById($id);
+        $productInOrder = json_decode($order['products'], true);
+        $productIds = array_keys($productInOrder);
+        $product = Product::getProductByIds($productIds);
+        $sum = 0;
+        foreach ($product as $item){
+            $sum += $item['price'] * $productInOrder[$item['id']];
+        }
+
+        require_once(ROOT.'/views/cabinet/order.php');
+        return true;
+    }
 }

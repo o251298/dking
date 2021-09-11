@@ -42,4 +42,41 @@ class Xml
     }
 
 
+    public static function setXmlFile($name){
+        $db = DB::getConnection();
+        $date =  date("Y-m-d H:i:s");
+        $sql = "INSERT INTO xml_files (file, date) VALUES (:file, :date)";
+        $result = $db->prepare($sql);
+        $result->bindParam(":file", $name);
+        $result->bindParam(":date", $date);
+        return $result->execute();
+    }
+
+
+    public static function getXmlFiles(){
+        $arrayXmlFiles = array();
+        $db = DB::getConnection();
+        $sql = "SELECT * FROM xml_files";
+        $result = $db->query($sql);
+        $i = 0;
+        while ($row = $result->fetch()){
+            $arrayXmlFiles[$i]['id'] = $row['id'];
+            $arrayXmlFiles[$i]['filename'] = $row['file'];
+            $arrayXmlFiles[$i]['date'] = $row['date'];
+            $i++;
+        }
+        return $arrayXmlFiles;
+    }
+
+    public static function getFileNameById($id){
+        $arr = array();
+        $db = DB::getConnection();
+        $sql = "SELECT * FROM xml_files WHERE `id` = '$id'";
+        $result = $db->query($sql);
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        return $result->fetch();
+    }
+
 }

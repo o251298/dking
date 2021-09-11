@@ -107,4 +107,21 @@ class Order
         return $status;
     }
 
+    public static function getOrdersByUserId($userId){
+        $userOrders = array();
+        $db = DB::getConnection();
+        $sql = "SELECT * FROM Orders WHERE user_id = '$userId'";
+        $result = $db->query($sql);
+        $i = 0;
+        while ($row = $result->fetch()){
+            $userOrders[$i]['username'] = $row['fname'] . ' ' . $row['lname'];
+            $userOrders[$i]['products'] = $row['products'];
+            $userOrders[$i]['status'] = self::getNameStatusById($row['status']);
+            $userOrders[$i]['date'] = $row['date'];
+            $userOrders[$i]['id'] = $row['id'];
+            $i++;
+        }
+        return $userOrders;
+    }
+
 }

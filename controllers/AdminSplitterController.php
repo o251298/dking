@@ -69,9 +69,28 @@ class AdminSplitterController extends AdminBase
         return true;
     }
 
-    public function actionParse(){
-        $parse = new Parser('./test2.xml');
-        $parse->run();
-        die();
+    public function actionParse($id){
+        $fileName = Xml::getFileNameById($id);
+        $parse = new Parser($fileName['file']);
+        if ($parse->run()){
+            header("Location: /admin");
+        }
+    }
+
+    public function actionIndex(){
+        $xmlFiles = array();
+        $xmlFiles = Xml::getXmlFiles();
+
+        if (isset($_POST['submit']) && !empty($_POST['xml_file'])){
+            if (Xml::setXmlFile($_POST['xml_file'])){
+                header("Location: /admin");
+            }
+        } else {
+            echo "error";
+        }
+
+
+        require_once(ROOT.'/views/splitter/index.php');
+        return true;
     }
 }

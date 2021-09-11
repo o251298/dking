@@ -36,13 +36,14 @@ class Category
 
     public static function addCategoryParse($arrayCategoryParse){
         $db = DB::getConnection();
-        $sql = "INSERT INTO offer_category_id (name, offer_id, hash) VALUE (:name, :offer_id, :hash)";
+        $sql = "INSERT INTO offer_category_id (name, offer_id, hash, source) VALUE (:name, :offer_id, :hash, :source)";
         $result = $db->prepare($sql);
         foreach ($arrayCategoryParse as $item){
             $category_str = explode(';', $item);
             $result->bindParam(":name", $category_str[1]);
             $result->bindParam(":offer_id", $category_str[0]);
             $result->bindParam(":hash", $category_str[2]);
+            $result->bindParam(":source", $category_str[3]);
             $result->execute();
             unset($category_str);
         }
@@ -82,6 +83,23 @@ class Category
         $categoryInPrice = array();
         $db = DB::getConnection();
         $sql = "SELECT * FROM offer_category_id";
+        $result = $db->query($sql);
+        $i = 0;
+        while ($row = $result->fetch()){
+            $categoryInPrice[$i]['id'] = $row['id'];
+            $categoryInPrice[$i]['name'] = $row['name'];
+            $categoryInPrice[$i]['offer_id'] = $row['offer_id'];
+            $categoryInPrice[$i]['status'] = $row['status'];
+            $categoryInPrice[$i]['name_category_shop'] = $row['name_category_shop'];
+            $i++;
+        }
+        return $categoryInPrice;
+    }
+
+    public static function getCategoryByFilename($fileName){
+        $categoryInPrice = array();
+        $db = DB::getConnection();
+        $sql = "SELECT * FROM offer_category_id WHERE source = '$fileName'";
         $result = $db->query($sql);
         $i = 0;
         while ($row = $result->fetch()){

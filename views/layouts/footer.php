@@ -17,6 +17,7 @@
                                 <?php endif; ?>
                             <?php endif; ?>
                             <li><a href="/">Главная</a></li>
+                            <li><a href="/cabinet">Кабинет</a></li>
                             <li><a href="/category/1">Каталог</a></li>
                         </ul>
                     </div>

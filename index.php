@@ -3,8 +3,8 @@ session_start();
 // Front Controller
 
 // 1 Общие настройки, включение отображения ошибок
-ini_set('display_errors', 1); // Отображение ошибок
-error_reporting(E_ALL); // Отображение всех ошибок
+//ini_set('display_errors', 1); // Отображение ошибок
+//error_reporting(E_ALL); // Отображение всех ошибок
 ini_set('max_execution_time', 900);
 
 

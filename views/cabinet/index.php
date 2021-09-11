@@ -19,4 +19,25 @@ include_once ROOT.'/views/layouts/header.php';
             </div>
         </div>
     </div>
+    <table class="table caption-top">
+        <caption>ЗАКАЗЫ</caption>
+        <thead>
+        <tr>
+            <th scope="col">Номер заказа</th>
+            <th scope="col">Данные о пользователе</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Дата заказа</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($userOrders as $item): ?>
+        <tr>
+            <th scope="row"><a href="/cabinet/order/<?= $item['id'] ?>"><?= $item['id'] ?></a></th>
+            <td><?= $item['username'] ?></td>
+            <td><?= $item['status'] ?></td>
+            <td><?= $item['date'] ?></td>
+        </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>

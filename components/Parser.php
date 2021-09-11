@@ -33,7 +33,7 @@ class Parser
                 $image = (string) $offer->picture[0];
                 $availability = (integer) $offer->stock_quantity;
                 $hash = hash('md5', $hash_file);
-                Product::createParseProduct($name, $offer_id, $category_price_id, $description, $price, $image, $availability, $hash);
+                Product::createParseProduct($name, $offer_id, $category_price_id, $description, $price, $image, $availability, $hash, $this->xmlUrl);
         }
     }
 
@@ -64,7 +64,7 @@ class Parser
         foreach ($xml->shop->categories->category as $category_price){
             $hash = json_encode($category_price);
             $hash = hash('md5', $hash);
-            $arrayCategory[] = (integer) $category_price['id'] . ';' . (string) $category_price . ';' . $hash;
+            $arrayCategory[] = (integer) $category_price['id'] . ';' . (string) $category_price . ';' . $hash . ';' . $this->xmlUrl;
         }
         Category::addCategoryParse($arrayCategory);
     }

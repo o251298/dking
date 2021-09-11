@@ -13,6 +13,7 @@ return array(
     'cart/clear' => 'cart/clear',
     'cart/remove/([0-9]+)' => 'cart/remove/$1',
     'cart/checkout' => 'cart/checkout',
+    'cabinet/order/([0-9]+)' => 'cabinet/order/$1',
     'cabinet' => 'cabinet/index',
     'admin/product/page-([0-9]+)' => 'adminProduct/index/$1',
     'admin/product/read/([0-9]+)' => 'adminProduct/read/$1',
@@ -22,7 +23,8 @@ return array(
     'admin/orders/view/([0-9]+)' => 'adminOrders/view/$1',
     'admin/product/create' => 'adminProduct/create',
     'admin/splitter/category' => 'adminSplitter/linkCategory',
-    'admin/splitter/parse' => 'adminSplitter/parse',
+    'admin/splitter/parse/([0-9]+)' => 'adminSplitter/parse/$1',
+    'admin/splitter' => 'adminSplitter/index',
     'admin' => 'admin/index',
     '' => 'site/index',
 );

@@ -4,17 +4,18 @@
 class Product
 {
     const COUNT_DEFAULT = 9;
-    const COUNT_FOR_PAGE = 3;
+    const COUNT_FOR_PAGE = 8;
     const ADMIN_COUNT_PRODUCT_FOR_PAGE = 15;
     public static $defaultIdCategoryPrice = null;
-    public static $defaultIdCategoryShop = null;
-    public static $sourcePrice = 1;
+    public static $statusActive = 2;
+    public static $statusNew = 1;
+    public static $statusInactive = 3;
     public static $sourceAdmin = 0;
 
     public static function getLatestProduct($count = self::COUNT_DEFAULT){
         $latestProduct = array();
         $db = DB::getConnection();
-        $sql = "SELECT * FROM product ORDER BY `id` DESC LIMIT " . $count;
+        $sql = "SELECT * FROM product WHERE status = 2 ORDER BY `id` DESC LIMIT " . $count;
 
         $result = $db->query($sql);
         $i = 0;
@@ -30,6 +31,7 @@ class Product
     }
 
     public static function getProductCategory($categoryId = false, $page = 1){
+        $status = self::$statusActive;
 
         if ($categoryId){
             $page = intval($page);
@@ -38,7 +40,7 @@ class Product
             $ProductCategory = array();
 
             $db = DB::getConnection();
-            $sql = "SELECT product.id as id, product.name as name, product.image as image, product.category_id as category_id, product.price as price, category.name as category_name, category.picture as category_picture FROM product LEFT JOIN category ON category.id=product.category_id WHERE product.category_id LIKE " . $categoryId . " LIMIT ". self::COUNT_FOR_PAGE . " OFFSET " . $offset;
+            $sql = "SELECT product.id as id, product.name as name, product.image as image, product.status as status, product.category_id as category_id, product.price as price, category.name as category_name, category.picture as category_picture FROM product LEFT JOIN category ON category.id=product.category_id WHERE product.category_id LIKE " . $categoryId . " AND product.status LIKE '$status' LIMIT ". self::COUNT_FOR_PAGE . " OFFSET " . $offset;
             $result = $db->query($sql);
 //            $sql = "SELECT * FROM product WHERE `category_id` = ". $categoryId ." LIMIT ". self::COUNT_FOR_PAGE . " OFFSET " . $offset;
 
@@ -200,21 +202,16 @@ class Product
         return $path . $noImage;
     }
 
-    public static function createParseProduct($name, $offer_id, $category_price_id, $description, $price, $image, $availability, $hash){
+    public static function createParseProduct($name, $offer_id, $category_price_id, $description, $price, $image, $availability, $hash, $source){
 
         $db = DB::getConnection();
         $categoryIdAdmin = null;
-
         $code = 0;
-
-
         $brand = 0;
-
         $is_new = 0;
         $is_recommended = 0;
         $status = 1;
         $source = 1;
-        //
 
         $sql = 'INSERT INTO product (`name`, `category_id`, `code`, `price`, `availability`, `brand`, `image`, `description`, `is_new`, `is_recommended`, `status`, `category_id_price`, `offer_id`, `source`, `hash`) VALUES(:name, :category_id, :code, :price, :availability, :brand, :image, :description, :is_new, :is_recommended, :status, :category_id_price, :offer_id, :source, :hash)';
        // $sql = "INSERT INTO product_test (name, category_id, description, image, hash) VALUE (:name, :category_id, :description, :image, :hash)";
@@ -269,12 +266,12 @@ class Product
         $db = DB::getConnection();
         $categoryIdPrice = $options['offerIdCategory'];
         $category_id = $options['shopIdCategory'];
-//        echo $category_id;
-//        die();
-        $sql = "UPDATE product SET category_id = :category_id WHERE category_id_price='$categoryIdPrice'";
+        $status = self::$statusActive;
+        $sql = "UPDATE product SET category_id = :category_id, status = :status WHERE category_id_price='$categoryIdPrice'";
 
         $result = $db->prepare($sql);
         $result->bindParam(":category_id", $category_id);
+        $result->bindParam(":status", $status);
         return $result->execute();
     }
 

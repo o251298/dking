@@ -124,4 +124,22 @@ class Order
         return $userOrders;
     }
 
+    public static function exportDataOrders(){
+        $db = DB::getConnection();
+        $sql = "SELECT * FROM Orders";
+        $result = $db->query($sql);
+        $delimiter = ',';
+        $filename = "members_data_order" . date('Y-m-d') . 'csv';
+        $f = fopen('php://memory', 'w');
+        $fields = array('ID', 'FNAME', 'LNAME', 'EMAIL', 'PRODUCT', 'STATUS', 'DATE');
+        fputcsv($f, $fields, $delimiter);
+        while ($row = $result->fetch()){
+                $lineData = array($row['id'], $row['fname'], $row['lname'], $row['email'], $row['product'], $row['status'], $row['date']);
+                fputcsv($f, $lineData, $delimiter);
+            }
+        fseek($f, 0);
+        header('Content-Type: text:csv');
+        header('Content-Disposition: attachment; filename="' . $filename .'";');
+        fpassthru($f);
+    }
 }

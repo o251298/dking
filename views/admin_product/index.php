@@ -3,9 +3,10 @@
         <div class="content">
             <div class="container-fluid">
                 <h4 class="page-title">Список продуктов</h4>
-                <a class="page-title" href="/admin/product/create">Новый товар</a>
+                <a class="btn btn-success"  href="/admin/product/create">Новый товар</a>
+                <hr>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <table class="table table-hover">

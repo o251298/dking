@@ -192,7 +192,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/splitter/parse">
+                    <a href="/admin/splitter">
                         <i class="la la-th"></i>
                         <p>Парсер товаров</p>
                         <span class="badge badge-count"></span>

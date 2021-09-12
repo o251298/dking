@@ -1,4 +1,5 @@
 <?php
+require_once(ROOT.'/components/function.php');
 class Parser
 {
     private $xmlUrl;
@@ -8,8 +9,13 @@ class Parser
     }
 
     private function getFileHash(){
-        $xml = file_get_contents($this->xmlUrl);
-        return hash('md5', $xml);
+        if (file_exists(ROOT."/$this->xmlUrl")){
+            $xml = file_get_contents($this->xmlUrl);
+            return hash('md5', $xml);
+        } else {
+            return false;
+        }
+
     }
 
     private function checkHash(){
@@ -35,9 +41,11 @@ class Parser
                 $hash = hash('md5', $hash_file);
                 Product::createParseProduct($name, $offer_id, $category_price_id, $description, $price, $image, $availability, $hash, $this->xmlUrl);
         }
+        return true;
     }
 
     private function checkOfferHash($arrayProduct){
+        $updateProducts = array();
         $xml = simplexml_load_file($this->xmlUrl) OR die('error parser');
         foreach ($xml->shop->offers->offer as $offer){
             $hash_file = json_encode($offer);
@@ -50,12 +58,10 @@ class Parser
 
             if ($arrayProduct[$offer_id]['hash'] !== $hash){
                 Product::updateProductParser($offer_id, $name, $category_price_id, $description, $image, $hash);
-                echo "Внесены обновления в следующие товары:";
-                echo "<pre>";
-                echo $offer_id;
-                echo "</pre>";
+                $updateProducts[] = $offer_id;
             }
         }
+        return $updateProducts;
     }
 
     private function parseCategory(){
@@ -67,6 +73,7 @@ class Parser
             $arrayCategory[] = (integer) $category_price['id'] . ';' . (string) $category_price . ';' . $hash . ';' . $this->xmlUrl;
         }
         Category::addCategoryParse($arrayCategory);
+        return true;
     }
 
     private function checkCategoryHash($arrayCategory){
@@ -86,6 +93,7 @@ class Parser
     }
 
     public function run(){
+        $result = array();
         $arrayProduct = Product::getProductForParse();
         if ($this->getFileHash()){
 
@@ -97,19 +105,35 @@ class Parser
                     $arrayProduct = Product::getProductForParse();
                     $arrayCategory = Category::getCategoryHash();
                     echo "Парсим и обновляем хеш" . '<br>';
-                    $this->checkOfferHash($arrayProduct);
+                    $updateProduct = $this->checkOfferHash($arrayProduct);
+                    if (!empty($updateProduct)){
+                        $str_product = '';
+                        foreach ($updateProduct as $product){
+                            $str_product .= $product . ' ';
+                        }
+                        Logs::addLogs(" $this->xmlUrl Были обновления в такие продукты: " . $str_product);
+                        $result[] = "Были обновления в такие продукты: " . $str_product;
+
+                    }
                     $this->checkCategoryHash($arrayCategory);
                 } else {
-                    echo "Хеш прайса совпадает с предыдущим!";
+                    Logs::addLogs("$this->xmlUrl Хеш прайса совпадает с предыдущим! ");
+                    $result[] = "Хеш прайса совпадает с предыдущим!";
+                    //echo "Хеш прайса совпадает с предыдущим!";
                 }
             } else {
                 Xml::setFileHash($this->getFileHash(), $this->xmlUrl);
-                echo "Дабавили новый источник";
+                //echo "Дабавили новый источник";
                 // забераем хеш и парсим
                 $this->parseProduct();
                 $this->parseCategory();
+                if (($this->parseProduct() == true) && ($this->parseCategory() == true)){
+                    Logs::addLogs("$this->xmlUrl Дабавили новый источник");
+                    $result[] = "Дабавили новый источник";
+                }
             }
         }
+        return $result;
     }
 
 

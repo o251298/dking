@@ -55,16 +55,13 @@ class AdminSplitterController extends AdminBase
             $options = array();
             $options['offerIdCategory'] = $_POST['offerIdCategory'];
             $options['shopIdCategory'] = $_POST['shopIdCategory'];
-            //$name_category_shop = $_POST['name_category_shop'];
             $name = Category::getNameCategory($options['shopIdCategory']);
             if (Product::updateCategoryForProduct($options)){
                 if (Category::setStatusCategoryOffer($options['offerIdCategory'], 1, $name)){
-                    header("Location: /admin/splitter/category");
+                    header("Location: /admin/splitter");
                 }
             }
         }
-
-
         require_once(ROOT.'/views/splitter/category.php');
         return true;
     }
@@ -72,10 +69,32 @@ class AdminSplitterController extends AdminBase
     public function actionParse($id){
         $fileName = Xml::getFileNameById($id);
         $parse = new Parser($fileName['file']);
-        if ($parse->run()){
-            header("Location: /admin");
+        $result = $parse->run();
+        $categoryInPrice = array();
+        $categoryShop = array();
+        $categoryShop = Category::getCategoryList(self::DEFAULT_COUNT_CATEGORY);
+        $categoryInPrice = Category::getCategoryByFilename($fileName['file']);
+        if (isset($_POST['linkCategory'])){
+            $options = array();
+            $options['offerIdCategory'] = $_POST['offerIdCategory'];
+            $options['shopIdCategory'] = $_POST['shopIdCategory'];
+            //$name_category_shop = $_POST['name_category_shop'];
+            $name = Category::getNameCategory($options['shopIdCategory']);
+            if (Product::updateCategoryForProduct($options)){
+                if (Category::setStatusCategoryOffer($options['offerIdCategory'], 1, $name)){
+                    header("Location: /admin/splitter/parse/$id");
+                }
+            }
         }
+
+
+        require_once(ROOT.'/views/splitter/resultParse.php');
+        return true;
     }
+
+
+
+
 
     public function actionIndex(){
         $xmlFiles = array();
@@ -85,11 +104,7 @@ class AdminSplitterController extends AdminBase
             if (Xml::setXmlFile($_POST['xml_file'])){
                 header("Location: /admin");
             }
-        } else {
-            echo "error";
         }
-
-
         require_once(ROOT.'/views/splitter/index.php');
         return true;
     }

@@ -44,4 +44,8 @@ class AdminOrdersController extends AdminBase
          *
          */
     }
+    public function actionExport(){
+        Order::exportDataOrders();
+        return true;
+    }
 }

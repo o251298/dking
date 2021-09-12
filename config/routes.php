@@ -21,6 +21,7 @@ return array(
     'admin/product/delete/([0-9]+)' => 'adminProduct/delete/$1',
     'admin/orders/page-([0-9]+)' => 'adminOrders/index/$1',
     'admin/orders/view/([0-9]+)' => 'adminOrders/view/$1',
+    'admin/orders/export' => 'adminOrders/export',
     'admin/product/create' => 'adminProduct/create',
     'admin/splitter/category' => 'adminSplitter/linkCategory',
     'admin/splitter/parse/([0-9]+)' => 'adminSplitter/parse/$1',

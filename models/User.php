@@ -152,4 +152,14 @@ class User
         }
         return $pathToFile = $path . $noImage;
     }
+
+    public static function getTotalUser(){
+        $db = DB::getConnection();
+        $sql = "SELECT count(`id`) as count FROM user";
+        $result = $db->query($sql);
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+        return $row['count'];
+    }
 }

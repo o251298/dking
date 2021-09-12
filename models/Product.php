@@ -276,4 +276,24 @@ class Product
     }
 
 
+    public static function getTotalActiveProduct(){
+        $db = DB::getConnection();
+        $sql = "SELECT count(`id`) as count FROM product WHERE `status` = 2";
+        $result = $db->query($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+        return $row['count'];
+
+    }
+
+
+    public static function getTotalUnActiveProduct(){
+        $db = DB::getConnection();
+        $sql = "SELECT count(`id`) as count FROM product WHERE `status` = 1";
+        $result = $db->query($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+        return $row['count'];
+
+    }
 }
